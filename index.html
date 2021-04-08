@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link
+      rel="stylesheet"
+      href="plugin/highlight/monokai.css"
+      id="highlight-theme"
+    />
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section
+          data-transition="zoom-in fade-out"
+          data-auto-animate
+          data-auto-animate-unmatched="fade"
+        >
+          <h1>Module Federation</h1>
+        </section>
+        <section
+          data-transition="zoom-in fade-out"
+          data-auto-animate
+          data-auto-animate-unmatched="fade"
+        >
+          <h1>Module Federation</h1>
+          <h2>next gen microservices</h2>
+        </section>
+
+        <section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Was ist Module Federation</h1>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Was ist Module Federation</h1>
+            <h2>
+              Module Federation ist eine Architektur die das laden von Code aus
+              anderen Anwendungen zur Laufzeit ermoeglicht
+            </h2>
+          </section>
+        </section>
+        <section data-transition="zoom-in fade-out">
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Erste Idee</h1>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Erste Idee</h1>
+            <h2>Komponenten teilen</h2>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Provider</h1>
+            <h2>Stellt Komponenten bereit</h2>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Provider</h1>
+            <pre data-id="code"><code data-trim>
+            ...
+            plugins: [
+            new webpack.container.ModuleFederationPlugin({
+              name: "server"
+              filename: "remote-entry.js",
+              exposes: { "./slider": "./src/slider.jsx" },
+              shared: ["react", "react-dom"],
+            }),
+            ],
+            ...
+          </code></pre>
+          </section>
+        </section>
+        <section data-transition="zoom-in fade-out">
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Consumer</h1>
+            <h2>Integriert die bereitgestellte Komponenten</h2>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Consumer</h1>
+            <h2>Setup</h2>
+            <pre data-id="code"><code data-trim>
+            ...
+            plugins: [
+            new ModuleFederationPlugin({
+              name: "common",
+              remotes: {
+                server: "server@http://localhost:3002/remoteEntry.js",
+              },
+              shared: ["react", "react-dom"],
+            }),
+            ...
+          </code></pre>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Consumer</h1>
+            <h2>Import</h2>
+            <pre data-id="code"><code data-trim>
+            
+            const Welcome = React.lazy(() => import("server/Welcome"))
+            
+
+          </code></pre>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Consumer</h1>
+            <h2>Aufruf</h2>
+            <pre data-id="code"><code data-trim><script type="text/template">
+            <React.Suspense fallback="Loading Name">
+              <Welcome />
+            </React.Suspense>
+          </script>
+            </code></pre>
+          </section>
+        </section>
+        <section data-transition="zoom-in fade-out">
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Demo Time</h1>
+          </section>
+        </section>
+        <section data-transition="zoom-in fade-out">
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Zweite Idee</h1>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Zweite Idee</h1>
+            <h2>Versionierung</h2>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Zweite Idee</h1>
+            <h2>npm, but not npm</h2>
+          </section>
+        </section>
+
+        <section data-transition="zoom-in fade-out">
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Provider</h1>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Provider</h1>
+            <h2>keine Code Aenderungen noetig</h2>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Provider</h1>
+            <h2>npm publish</h2>
+          </section>
+        </section>
+
+        <section data-transition="zoom-in fade-out">
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Consumer</h1>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Consumer</h1>
+            <h2>Setup</h2>
+          </section>
+
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Consumer</h1>
+            <pre
+              data-id="code"
+            ><code data-trim data-code-l><script type="text/template">
+              const federatedRemotes = {
+                'zee-slider': '^1.0.0',
+              }
+              
+              const deps = {
+                ...federatedRemotes,
+                ...require('./package.json').dependencies,
+              }
+
+              const unpkgRemote = (name) =>
+                `${camelCase(name)}@https://unpkg.com/${name}@${
+                  deps[name]
+                }/dist/browser/remote-entry.js`
+
+              const remotes = Object.keys(federatedRemotes).reduce(
+                (remotes, lib) => ({
+                  ...remotes,
+                  [lib]: unpkgRemote(lib),
+                }),
+                {}
+              )
+
+            </script>
+              </code></pre>
+          </section>
+
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Consumer</h1>
+            <h2>Import</h2>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Consumer</h1>
+            <pre data-id="code"><code data-trim><script type="text/template">
+              import Slider from 'zee-slider/slider'
+              ...
+              <Slider />
+            </script>
+              </code></pre>
+          </section>
+        </section>
+        <section data-transition="zoom-in fade-out">
+          <h1>Demo Time 2</h1>
+        </section>
+        <section data-transition="zoom-in fade-out">
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Dritte Idee</h1>
+            
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Dritte Idee</h1>
+            <h2>Nur React?</h2>
+          </section>
+          <section
+            data-transition="zoom-in fade-out"
+            data-auto-animate
+            data-auto-animate-unmatched="fade"
+          >
+            <h1>Dritte Idee</h1>
+            <h2>Nur React? - Nein!</h2>
+          </section>
+        </section>
+        <section data-transition="zoom-in fade-out">
+          <h1>Demo Time 3</h1>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        center: true,
+        history: true,
+
+        transition: "linear",
+        transitionSpeed: "slow",
+        // backgroundTransition: "slide",
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>
